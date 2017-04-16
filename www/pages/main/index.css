@@ -1,0 +1,12 @@
+.sidebar{
+    position: fixed;
+    top:45px;
+    height: 100%;
+}
+
+.frame-content{
+    box-sizing:border-box;
+    margin-left:190px;
+    height: 100%;
+
+}

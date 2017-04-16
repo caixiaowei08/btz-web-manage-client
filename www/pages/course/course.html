@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>子课程</title>
+</head>
+<body>
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            Home
+        </li>
+        <li>
+            课程管理
+        </li>
+        <li>
+            课程分类
+        </li>
+    </ul><!-- /.breadcrumb -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="btn-group" role="group">
+                <div class="btn btn-success" data-toggle="modal" data-target="#addCourse">添加</div>
+                <div class="btn btn-info" data-toggle="modal" data-target="#updateCourse">修改</div>
+                <div class="btn btn-danger" data-toggle="modal" data-target="#deleteCourse">删除</div>
+            </div>
+            <table id="course_table" class="table table-hover">
+            </table>
+            <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">添加课程大类</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" action="javascript:void(0)">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="请输入名称">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="请输入年龄">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="btn-group" role="group">
+                <div class="btn btn-success" data-toggle="modal" data-target="#addCourse">添加</div>
+                <div class="btn btn-info" data-toggle="modal" data-target="#updateCourse">修改</div>
+                <div class="btn btn-danger" data-toggle="modal" data-target="#deleteCourse">删除</div>
+            </div>
+            <table id="sub_course_table" class="table table-hover">
+            </table>
+            <div class="modal fade" id="addSubCourse" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">添加课程大类</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" action="javascript:void(0)">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" placeholder="请输入名称">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="age" placeholder="请输入年龄">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="addRecord">提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        //根据窗口调整表格高度
+        $(window).resize(function () {
+            $('#course_table').bootstrapTable('resetView', {
+                height: tableHeight()
+            })
+        })
+
+        $('#course_table').bootstrapTable({
+            search: true,//是否搜索
+            searchAlign: "left",//查询框对齐方式
+            searchOnEnterKey: false,//回车搜索
+            searchTimeOut: 500,
+            pagination: true,//设置为 true 会在表格底部显示分页条
+            pageSize: 15,//单页记录数
+            pageList: [10, 15, 20, 25, 30, 35, 40],//分页步进值
+            height: tableHeight(),
+            showRefresh: true,//刷新按钮
+            uniqueId: "id",
+            locale: "zh-CN",
+            singleSelect: true,
+            striped: true,
+            columns: [
+                [{
+                    title: "<span class='text-danger'>课程大类信息</span>",
+                    halign: "center",
+                    align: "center",
+                    colspan: 4
+                }
+                ],
+                [{
+                    title: "#",
+                    width: "10%",//宽度
+                    checkbox: true,
+                    align: "center",//水平
+                    valign: "middle"//垂直
+                },
+
+                    {
+                        title: "大类名称",
+                        field: "course",
+                        sortable: true,
+                        width: "50%",//宽度
+                        align: "center",//水平
+                        valign: "middle"//垂直
+                    }
+                    ,
+                    {
+                        title: "顺序",
+                        field: "order",
+                        sortable: true,
+                        width: "15%",//宽度
+                        align: "center",//水平
+                        valign: "middle"//垂直
+                    }
+                    ,
+                    {
+                        title: "状态",
+                        field: "state",
+                        sortable: true,
+                        width: "15%",//宽度
+                        align: "center",//水平
+                        valign: "middle"//垂直
+                    }
+                ]
+            ],
+            data: [{
+                id: 101,
+                course: '2016新大纲会计从业资格',
+                order: 1,
+                state: "停用"
+            }, {
+                id: 102,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 103,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }, {
+                id: 2,
+                course: '初级会计职称',
+                order: 2,
+                state: "在线"
+            }]
+        })
+
+        $(window).resize(function () {
+            $('#sub_course_table').bootstrapTable('resetView', {
+                height: tableHeight()
+            })
+        })
+
+        $('#sub_course_table').bootstrapTable({
+            search: true,//是否搜索
+            searchAlign: "left",//查询框对齐方式
+            searchOnEnterKey: false,//回车搜索
+            searchTimeOut: 500,
+            pagination: true,//设置为 true 会在表格底部显示分页条
+            pageSize: 15,//单页记录数
+            pageList: [10, 15, 20, 25, 30, 35, 40],//分页步进值
+            height: tableHeight(),
+            showRefresh: true,//刷新按钮
+            uniqueId: "id",
+            locale: "zh-CN",
+            singleSelect: true,
+            striped: true,
+            columns: [
+                [{
+                    title: "<span class='text-danger'>课程子类信息</span>",
+                    halign: "center",
+                    align: "center",
+                    colspan: 5
+                }
+                ],
+                [{
+                    title: "#",
+                    width: "10%",//宽度
+                    checkbox: true,
+                    align: "center",//水平
+                    valign: "middle"//垂直
+                },
+                    {
+                        title: "课程名称",
+                        field: "subCourse",
+                        sortable: true,
+                        width: "30%",//宽度
+                        align: "center",//水平
+                        valign: "middle"//垂直
+                    },
+                    {
+                        title: "课程大类",
+                        field: "course",
+                        sortable: true,
+                        width: "30%",//宽度
+                        align: "center",//水平
+                        valign: "middle"//垂直
+                    },
+                    {
+                        title: "可否试用",
+                        field: "try",
+                        sortable: true,
+                        width: "15%",//宽度
+                        align: "center",//水平
+                        valign: "middle"//垂直
+                    },
+                    {
+                        title: "顺序",
+                        field: "order",
+                        sortable: true,
+                        width: "15%",//宽度
+                        align: "center",//水平
+                        valign: "middle"//垂直
+                    }
+                ]
+            ],
+            data: [{
+                    id: 1,
+                    subCourse: "【2016】会计基础",
+                    course: "2016新大纲会计从业资格",
+                    try: "是",
+                    order: 1
+                 },
+                {
+                    id: 2,
+                    subCourse: "【2017】会计基础",
+                    course: "2016新大纲会计从业资格",
+                    try: "是",
+                    order: 3
+                },
+                {
+                    id: 3,
+                    subCourse: "【2018】会计基础",
+                    course: "2016新大纲会计从业资格",
+                    try: "是",
+                    order: 2
+                }
+            ]
+
+        })
+    })
+
+    function tableHeight() {
+        return $(window).height() - 250;
+    }
+
+
+</script>
