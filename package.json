@@ -20,6 +20,7 @@
   "devDependencies": {
     "bootstrap-select": "^1.12.2",
     "bootstrap-table": "^1.11.2",
+    "bootstrap-treeview": "^1.2.0",
     "electron": "~1.6.2",
     "electron-packager": "^8.6.0"
   }

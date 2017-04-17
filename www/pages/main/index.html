@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../../ace/assets/css/ace-rtl.min.css" />
     <link rel="stylesheet" href="../../bootstrap/dist/bootstrap-table.css" />
     <link rel="stylesheet" href="../../bootstrap/select2/select2.min.css" />
+    <link rel="stylesheet" href="../../bootstrap/dist/bootstrap-treeview.min.css" />
     <link rel="stylesheet" href="./index.css" />
     <script src="../../ace/assets/js/ace-extra.min.js"></script>
 </head>
@@ -60,10 +61,19 @@
                     <i class="ace-icon fa fa-cogs"></i>
                 </button>
             </div>
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                <span class="btn btn-success"></span>
+
+                <span class="btn btn-info"></span>
+
+                <span class="btn btn-warning"></span>
+
+                <span class="btn btn-danger"></span>
+            </div>
         </div><!-- /.sidebar-shortcuts -->
         <ul class="nav nav-list">
             <li class="open">
-                <a href="#" class="dropdown-toggle click-open">
+                <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text">课程管理</span>
                     <b class="arrow fa fa-angle-down"></b>
@@ -84,37 +94,52 @@
                         </a>
                         <b class="arrow"></b>
                     </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-list"></i>
+                    <span class="menu-text">试题管理</span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
                     <li class="">
                         <a class="fn-item-click" target="../course/course.html">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            试题管理
+                            课程分类
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a class="fn-item-click" target="../course/course.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            章节定义
                         </a>
                         <b class="arrow"></b>
                     </li>
                 </ul>
             </li>
         </ul>
-        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-            <i class="fa fa-keyboard-o"></i>
+        <div style="background-color:#f3f3f3;border-color: #e0e0e0;border-style: solid;border-width:0 0 1px 0;text-align: center;padding: 3px 0;position: relative;">
+            <i class="ace-icon fa fa-ils ace-save-state"></i>
         </div>
     </div>
     <div class="main-content" >
       <div id="content-iframe" class="main-content-inner">
       </div>
-
     </div>
     <div class="footer">
         <div class="footer-inner">
             <div class="footer-content">
-						<span class="bigger-120">
-							<span class="blue bolder">百题斩</span>
-							 伟文教育&copy; 2017-2030
-						</span>
+                <span class="bigger-120">
+                    <span class="blue bolder">百题斩</span>
+                     伟文教育&copy; 2017-2030
+                </span>
             </div>
         </div>
     </div>
-
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <a href="#" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
 </div>
@@ -127,6 +152,7 @@
 <script src="../../bootstrap/dist/bootstrap-table.min.js"></script>
 <script src="../../bootstrap/dist/bootstrap-table-zh-CN.min.js"></script>
 <script src="../../bootstrap/dist/bootstrap-select.min.js"></script>
+<script src="../../bootstrap/dist/bootstrap-treeview.js"></script>
 <script src="../../bootstrap/select2/select2.min.js"></script>
 <script src="../../ace/assets/js/tree.min.js"></script>
 <script src="../../ace/assets/js/ace-elements.min.js"></script>
@@ -145,14 +171,17 @@
         }
     });
 
-    $('.click-open').click(function() {
+    /**$('.click-open').click(function() {
         var isOpen = $(this).parent().attr('class');
-        if(isOpen ==""){
+        console.log(isOpen);
+        console.log(isOpen=="");
+        console.log(isOpen=="open");
+        if(isOpen ==""||isOpen==undefined){
             $(this).parent().addClass("open");
-        }else{
+        }else if(isOpen =="open"){
             $(this).parent().removeClass("open");
         }
-    });
+    });*/
 
     $(document).ready(function(){
         $.get("../course/course.html",function(data){
