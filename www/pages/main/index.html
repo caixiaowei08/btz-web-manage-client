@@ -72,15 +72,22 @@
             </div>
         </div><!-- /.sidebar-shortcuts -->
         <ul class="nav nav-list">
-            <li class="open">
+            <li class="active">
+                <a class="fn-item-click" target="../system/system.html">
+                    <i class="menu-icon fa fa-desktop"></i>
+                    <span class="menu-text">系统管理</span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+            <li class="">
                 <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-list"></i>
+                    <i class="menu-icon fa fa-book"></i>
                     <span class="menu-text">课程管理</span>
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
                 <b class="arrow"></b>
                 <ul class="submenu">
-                    <li class="active">
+                    <li class="">
                         <a class="fn-item-click" target="../course/course.html">
                             <i class="menu-icon fa fa-caret-right"></i>
                             课程分类
@@ -98,23 +105,37 @@
             </li>
             <li class="">
                 <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-list"></i>
+                    <i class="menu-icon fa fa-bars"></i>
                     <span class="menu-text">试题管理</span>
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
                 <b class="arrow"></b>
                 <ul class="submenu">
                     <li class="">
-                        <a class="fn-item-click" target="../course/course.html">
+                        <a class="fn-item-click" target="../examination/coreTest.html">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            课程分类
+                            核心考点
                         </a>
                         <b class="arrow"></b>
                     </li>
                     <li class="">
-                        <a class="fn-item-click" target="../course/course.html">
+                        <a class="fn-item-click" target="../examination/chapterExercises.html">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            章节定义
+                            章节练习
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a class="fn-item-click" target="../examination/simulatedExamination.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            模拟考场
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a class="fn-item-click" target="../examination/testExercises.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            考前押题
                         </a>
                         <b class="arrow"></b>
                     </li>
@@ -184,7 +205,7 @@
     });*/
 
     $(document).ready(function(){
-        $.get("../course/course.html",function(data){
+        $.get("../system/system.html",function(data){
             $("#content-iframe").html(data);
         });
     });

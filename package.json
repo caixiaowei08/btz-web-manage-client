@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "packager": "electron-packager ./ btz-web-manage-client --win --out ./bin --arch=x64 --electronVersion 1.6.2 --overwrite --ignore=node_modules --icon=./www/pages/image/favicon.ico"
+    "packager": "electron-packager ./ btz-web-manage-client --win32 --out ./bin --arch=x64 --electronVersion 1.6.2 --overwrite --ignore=node_modules --icon=./www/pages/image/favicon.ico"
   },
   "repository": "",
   "keywords": [
@@ -15,7 +15,7 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
+  "author": "蔡晓伟",
   "license": "CC0-1.0",
   "devDependencies": {
     "bootstrap-select": "^1.12.2",
