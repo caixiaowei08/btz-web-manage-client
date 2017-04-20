@@ -19,5 +19,79 @@
         </li>
     </ul><!-- /.breadcrumb -->
 </div>
+<div class="page-content">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">课程选择</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="pull-left">
+                        <span style="height: 28px;line-height: 28px;font-family:'FontAwesome';font-size: 14px;color: #337ab7">课程大类：</span>
+                        <select id="course" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="pull-left">
+                        <span style="height: 28px;line-height: 28px;font-family:'FontAwesome';font-size: 14px;color: #337ab7">课程小类：</span>
+                        <select id="subCourse" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="pull-left">
+                        <span style="height: 28px;line-height: 28px;font-family:'FontAwesome';font-size: 14px;color: #337ab7">章节选择：</span>
+                        <select id="chapter" class="form-control">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
+<script>
+    var data1 = [
+        {id: -1, text: '--选择课程大类--'},
+        {id: 0, text: '2017江苏省会计从业资格考试'},
+        {id: 1, text: '2017浙江省会计从业资格考试'},
+        {id: 2, text: '2017上海会计从业资格考试'},
+        {id: 3, text: '2017全国会计从业资格考试'},
+        {id: 4, text: '2017四川省会计从业资格考试'},
+        {id: 1, text: '2017浙江省会计从业资格考试'},
+        {id: 2, text: '2017上海会计从业资格考试'},
+        {id: 3, text: '2017全国会计从业资格考试'},
+        {id: 4, text: '2017四川省会计从业资格考试'}];
+    var data2 = [
+        {id: -1, text: '--选择课程小类--'},
+        {id: 1, text: '[2017会计基础]'},
+        {id: 2, text: '[2017会计基础]'},
+        {id: 3, text: '[2017会计基础]'}
+    ];
+    var data3 = [
+        {id: -1, text: '--选择课程章节--'},
+        {id: 1, text: '总论'},
+        {id: 2, text: '会计要素与会计等式'},
+        {id: 3, text: '会计科目与账户'}
+    ];
+
+    $('#course').select2({
+        data: data1,
+        tags: "true",
+        placeholder: "Select a state", //默认提示语
+        theme: "classic"
+    });
+
+    $('#subCourse').select2({
+        data: data2,
+        theme: "classic"
+    });
+
+    $('#chapter').select2({
+        data: data3,
+        theme: "classic"
+    });
+</script>
