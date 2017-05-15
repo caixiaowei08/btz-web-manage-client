@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../ace/assets/css/fonts.googleapis.com.css" />
     <link rel="stylesheet" href="../../ace/assets/css/ace.min.css" />
     <link rel="stylesheet" href="../../ace/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../../toastr_lib/toastr.min.css" />
 </head>
 <body class="login-layout light-login" style="overflow: hidden">
 <div class="main-container">
@@ -36,27 +37,25 @@
                                     <form>
                                         <fieldset>
                                             <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="管理员账号" />
-															<i class="ace-icon fa fa-user"></i>
-														</span>
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input type="text" class="form-control" id="accountId" placeholder="管理员账号" />
+                                                        <i class="ace-icon fa fa-user"></i>
+                                                    </span>
                                             </label>
-
                                             <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="账号密码" />
-															<i class="ace-icon fa fa-lock"></i>
-														</span>
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input type="password" class="form-control" id="accountPwd" placeholder="账号密码" />
+                                                        <i class="ace-icon fa fa-lock"></i>
+                                                    </span>
                                             </label>
                                             <div class="space"></div>
                                             <div class="clearfix">
-                                                <a href="../main/index.html" id="login_btn">
+                                                <!--<a href="../main/index.html" id="login_btn">-->
                                                     <!-- 关于跳转讲解 http://blog.csdn.net/xuexiiphone/article/details/51443144-->
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+                                                <button type="button" onclick="login()" class="width-35 pull-right btn btn-sm btn-primary">
                                                     <i class="ace-icon fa fa-key"></i>
                                                     <span class="bigger-110">登录</span>
                                                 </button>
-                                                </a>
                                             </div>
                                             <div class="space-4"></div>
                                         </fieldset>
@@ -65,7 +64,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -75,6 +73,38 @@
 </html>
 <script>
     window.$ = window.jQuery = require("../../ace/assets/js/jquery-2.1.4.min.js");
+    window.toastr = require("../../toastr_lib/toastr.min.js");
 </script>
 <script>
+   function login() {
+       var accountId = $("#accountId").val();
+       var accountPwd = $("#accountPwd").val();
+       console.log(accountId);
+       console.log(accountId);
+
+       toastr.options ={
+           "closeButton":true,//是否显示关闭按钮
+           "debug":false,//是否使用debug模式
+           "positionClass":"toast-top-center",//弹出窗的位置
+           "showDuration":"300",//显示的动画时间
+           "hideDuration":"1000",//消失的动画时间
+           "timeOut":"2000",//展现时间
+           "extendedTimeOut":"1000",//加长展示时间
+           "showEasing":"swing",//显示时的动画缓冲方式
+           "hideEasing":"linear",//消失时的动画缓冲方式
+           "showMethod":"fadeIn",//显示时的动画方式
+           "hideMethod":"fadeOut"//消失时的动画方式
+       };
+
+       if (accountId === null || accountId === undefined || accountId === '') {
+           toastr.info("请输入管理员账号!");
+           return;
+       }
+
+       if (accountPwd === null || accountPwd === undefined || accountPwd === '') {
+           toastr.info("请输入登录密码!");
+           return;
+        }
+    }
+
 </script>

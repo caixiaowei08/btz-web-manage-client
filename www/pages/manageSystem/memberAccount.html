@@ -15,20 +15,13 @@
             系统管理
         </li>
         <li>
-            系统账号
+            会员账号
         </li>
     </ul><!-- /.breadcrumb -->
 </div>
 <div class="page-content">
-    <div class="btn-group" role="group">
-        <div class="btn btn-success" data-toggle="modal" data-target="#addManageAccount">添加</div>
-        <div class="btn btn-info" data-toggle="modal" data-target="#updateManageAccount">修改</div>
-        <div class="btn btn-danger" data-toggle="modal" data-target="#deleteManageAccount">删除</div>
-    </div>
-    <div class="space-2"></div>
     <table id="member_table" class="table table-hover">
     </table>
-
     <div class="modal fade" id="addManageAccount" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -135,14 +128,14 @@
 
         $('#member_table').bootstrapTable({
             search: true,//是否搜索
-            searchAlign: "left",//查询框对齐方式
-            searchOnEnterKey: true,//回车搜索
+            searchAlign: "right",//查询框对齐方式
+            searchOnEnterKey: false,//回车搜索
             searchTimeOut: 500,
             pagination: true,//设置为 true 会在表格底部显示分页条
-            pageSize: 15,//单页记录数
-            pageList: [10, 15, 20, 25, 30, 35, 40],//分页步进值
+            pageSize: 20,//单页记录数
+            pageList: [10 ,20, 50, 100],//分页步进值
             height: tableHeight(),
-            showRefresh: false,//刷新按钮
+            showRefresh: true,//刷新按钮
             uniqueId: "id",
             locale: "zh-CN",
             singleSelect: true,
@@ -197,18 +190,42 @@
                 ]
             ],
             data: [{
+                id:"10010",
                 accountId: "admin",
                 accountName: "系统超级账户",
                 role: "管理员",
                 state: "正常"
             },
                 {
+                    id:"10011",
                     accountId: "caixiaowei",
                     accountName: "蔡晓伟",
                     role: "录入员",
                     state: "正常"
                 },
                 {
+                    id:"10015",
+                    accountId: "zhangsan",
+                    accountName: "张三",
+                    role: "录入员",
+                    state: "正常"
+                },
+                {
+                    id:"20015",
+                    accountId: "admin",
+                    accountName: "系统超级账户",
+                    role: "管理员",
+                    state: "正常"
+                },
+                {
+                    id:"30015",
+                    accountId: "caixiaowei",
+                    accountName: "蔡晓伟",
+                    role: "录入员",
+                    state: "正常"
+                },
+                {
+                    id:"32215",
                     accountId: "zhangsan",
                     accountName: "张三",
                     role: "录入员",
