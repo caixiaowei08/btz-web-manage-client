@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../../bootstrap/dist/bootstrap-table.css" />
     <link rel="stylesheet" href="../../bootstrap/select2/select2.min.css" />
     <link rel="stylesheet" href="../../bootstrap/dist/bootstrap-treeview.min.css" />
+    <link rel="stylesheet" href="../../toastr_lib/toastr.min.css" />
     <link rel="stylesheet" href="./index.css" />
     <script src="../../ace/assets/js/ace-extra.min.js"></script>
 </head>
@@ -192,6 +193,7 @@
 </html>
 <script>
     window.$ = window.jQuery = require("../../ace/assets/js/jquery-2.1.4.min.js");
+    window.toastr = require("../../toastr_lib/toastr.min.js");
 </script>
 <script  src="../../ace/assets/js/bootstrap.min.js"></script>
 <script src="../../bootstrap/dist/bootstrap-table.min.js"></script>
@@ -216,19 +218,6 @@
             $(this).parent().addClass("active");
         }
     });
-
-    /**$('.click-open').click(function() {
-        var isOpen = $(this).parent().attr('class');
-        console.log(isOpen);
-        console.log(isOpen=="");
-        console.log(isOpen=="open");
-        if(isOpen ==""||isOpen==undefined){
-            $(this).parent().addClass("open");
-        }else if(isOpen =="open"){
-            $(this).parent().removeClass("open");
-        }
-    });*/
-
     $(document).ready(function(){
         $.get("../system/system.html",function(data){
             $("#content-iframe").html(data);

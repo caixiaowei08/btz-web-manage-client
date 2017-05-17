@@ -77,11 +77,8 @@
 </script>
 <script>
    function login() {
-       var accountId = $("#accountId").val();
-       var accountPwd = $("#accountPwd").val();
-       console.log(accountId);
-       console.log(accountId);
-
+       var accountId = $("#accountId").val().trim();
+       var accountPwd = $("#accountPwd").val().trim();
        toastr.options ={
            "closeButton":true,//是否显示关闭按钮
            "debug":false,//是否使用debug模式
@@ -105,6 +102,33 @@
            toastr.info("请输入登录密码!");
            return;
         }
+       var request =new Object();
+       request.accountId=accountId;
+       request.accountPwd=accountPwd;
+
+       console.log(JSON.stringify(request));
+
+       $.ajax({
+           url:"http://localhost:8080/btzapp/accountController.do?checkuser",
+           type:'post',
+           dataType:'json',
+           timeout:10000,
+           contentType:'application/json;charset=utf-8',
+           data:JSON.stringify(request),
+           success:function(data){
+               if(data.success==="0"){
+                   toastr.success("登录成功！");
+                   window.location.href='../main/index.html';
+               }else{
+                   toastr.error(data.msg);
+               }
+           },
+           error:function(jqxhr,textStatus,errorThrow){console.log(errorThrow);},
+           statusCode:{
+               404:function(){console.log('not found');},
+               500:function(){console.log('error by server');},
+           }
+       });
     }
 
 </script>
