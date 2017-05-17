@@ -31,18 +31,72 @@
     <div class="navbar-buttons navbar-header pull-right" role="navigation">
         <ul class="nav ace-nav">
             <li class="transparent" >
-                <a class="dropdown-toggle" href="#">
-                    <i class="ace-icon fa fa-user"></i>
-                    &nbsp;<span class="">admin</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                </a>
             </li>
-            <li class="transparent" >
-                <a class="dropdown-toggle" href="#">
-                    <i class="ace-icon red2 fa fa-power-off"></i>
-                    &nbsp;<span class="">退出</span>&nbsp;&nbsp;
+            <li class="transparent dropdown-modal">
+                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                    <i class="ace-icon fa fa-user"></i>
+                    <span id="accountName"></span>
+                    <i class="ace-icon fa fa-caret-down"></i>
                 </a>
+                <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                    <li class="disabled">
+                        <a>
+                            <i class="ace-icon fa fa-building"></i>
+                            <span id="accountId"></span>
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a>
+                            <i class="ace-icon fa fa-user-secret"></i>
+                            <span id="role"></span>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#updatePWD">
+                            <i class="ace-icon fa fa-cogs"></i>
+                            修改密码
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a class="dropdown-toggle" href="javascript:" onclick="loginOff();">
+                            <i class="ace-icon red2 fa fa-power-off"></i>
+                            &nbsp;退出登录&nbsp;&nbsp;
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
+    </div>
+</div>
+<div class="modal fade" id="updatePWD" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="form-btz"  action="javascript:void(0)">
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="oldPwd" placeholder="请输入原始密码">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="newPwd" placeholder="请输入4-16位新密码">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="secondNewPwd" placeholder="请再次输入新密码">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="updateNewPwd()">提交</button>
+            </div>
+        </div>
     </div>
 </div>
 <div class="main-container ace-save-state">
@@ -206,8 +260,11 @@
 <script src="../../ace/assets/js/ace-extra.min.js"></script>
 <script src="../../ace/assets/js/bootstrap-editable.min.js"></script>
 <script src="../../ace/assets/js/ace.min.js"></script>
+<script src="../../js/constant.js"></script>
+
 
 <script>
+    //切换标签
     $('.fn-item-click').click(function() {
         var _clickTab = $(this).attr('target');
         if(_clickTab!=undefined&&_clickTab.length>0){
@@ -219,8 +276,134 @@
         }
     });
     $(document).ready(function(){
+        //加载管理用户信息
+        $.ajax({
+            url:"http://localhost:8080/btzapp/accountController.do?getAccountFromSession",
+            type:'get',
+            dataType:'json',
+            timeout:10000,
+            contentType:'application/json;charset=utf-8',
+            success:function(data){
+                console.log(data);
+                if(data.success==="0"){
+                    console.log(data.content.accountName);
+                    $("#accountName").html(data.content.accountName);//data.content.accountName;
+                    $("#accountId").html(data.content.accountId);
+                    $("#role").html(data.content.role===2?"录入员":"管理员")
+                }
+            },
+            error:function(jqxhr,textStatus,errorThrow){},
+            complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+                if(status=='timeout'){//超时,status还有success,error等值的情况
+                    toastr.warning("请求超时，请重试！");
+                }
+            }
+        });
         $.get("../system/system.html",function(data){
             $("#content-iframe").html(data);
         });
+        toastr.options ={
+            "closeButton":true,//是否显示关闭按钮
+            "debug":false,//是否使用debug模式
+            "positionClass":"toast-top-center",//弹出窗的位置
+            "showDuration":"300",//显示的动画时间
+            "hideDuration":"1000",//消失的动画时间
+            "timeOut":"2000",//展现时间
+            "extendedTimeOut":"1000",//加长展示时间
+            "showEasing":"swing",//显示时的动画缓冲方式
+            "hideEasing":"linear",//消失时的动画缓冲方式
+            "showMethod":"fadeIn",//显示时的动画方式
+            "hideMethod":"fadeOut"//消失时的动画方式
+        };
     });
+
+    //退出登录
+    function loginOff() {
+        $.ajax({
+            url:"http://localhost:8080/btzapp/accountController.do?logOff",
+            type:'get',
+            dataType:'json',
+            timeout:10000,
+            contentType:'application/json;charset=utf-8',
+            success:function(data){
+                console.log(data);
+            },
+            error:function(jqxhr,textStatus,errorThrow){},
+            complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+            if(status=='timeout'){//超时,status还有success,error等值的情况
+                toastr.warning("请求超时，请重试！");
+            }
+        }
+        });
+        window.location.href='../login/login.html';
+    }
+   //更新密码
+    function updateNewPwd(){
+        console.log("updateNewPwd");
+        var oldPwd = $("#oldPwd").val().trim();
+        var newPwd = $("#newPwd").val().trim();
+        var secondNewPwd = $("#secondNewPwd").val().trim();
+        if (oldPwd === null || oldPwd === undefined || oldPwd === '') {
+            toastr.warning("请输入旧密码!");
+            return;
+        }
+        if (newPwd === null || newPwd === undefined || newPwd === '') {
+            toastr.warning("请输入新密码!");
+            return;
+        }
+        if (secondNewPwd === null || secondNewPwd === undefined || secondNewPwd === '') {
+            toastr.warning("请输入再次新密码!");
+            return;
+        }
+        var reg = new RegExp(/^[0-9A-Za-z]+$/);
+        if (!(newPwd.length >=4 && newPwd.length <=16 && (reg.test(newPwd)))) {
+            toastr.warning("新密码必须满足位数大于等于4 小于等于16 且只能是数字和字母混合！ ");
+            return;
+        }
+
+        if (!(newPwd === secondNewPwd)) {
+            toastr.warning("新密码两次输入不一致");
+            return;
+        }
+        var request = new Object();
+        request.oldAccountPwd =oldPwd;
+        request.newAccountPwd =newPwd;
+        $.ajax({
+            url:GLOBAL_CONSTANT_URL+"accountController.do?doUpdatePwd",
+            type:'post',
+            dataType:'json',
+            timeout:10000,
+            contentType:'application/json;charset=utf-8',
+            data:JSON.stringify(request),
+            success:function(data){
+                if(data.success==="0"){
+                    toastr.success("修改密码成功！");
+                    $("#updatePWD").modal('hide');
+                }else{
+                    toastr.error(data.msg);
+                }
+            },
+            error:function(jqxhr,textStatus,errorThrow){console.log(errorThrow);},
+            statusCode:{
+                404:function(){console.log('not found');},
+                500:function(){console.log('error by server');},
+            }
+        });
+    }
+
+    //清空文本框内容
+    $("#updatePWD").on("hidden.bs.modal", function() {
+        clearForm($(".form-btz"));
+    });
+    function clearForm(form) {
+        $(':input', form).each(function () {
+            var type = this.type;
+            var tag = this.tagName.toLowerCase(); // normalize case
+            if (type == 'text' || type == 'password' || tag == 'textarea')
+                this.value = "";
+            else if (tag == 'select')
+                this.selectedIndex = -1;
+        });
+    };
+</script>
 </script>

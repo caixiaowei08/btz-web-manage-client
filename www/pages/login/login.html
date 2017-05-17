@@ -105,9 +105,7 @@
        var request =new Object();
        request.accountId=accountId;
        request.accountPwd=accountPwd;
-
        console.log(JSON.stringify(request));
-
        $.ajax({
            url:"http://localhost:8080/btzapp/accountController.do?checkuser",
            type:'post',
