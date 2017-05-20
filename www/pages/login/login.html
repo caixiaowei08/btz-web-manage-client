@@ -93,6 +93,8 @@
            "hideMethod":"fadeOut"//消失时的动画方式
        };
 
+       window.location.href='../main/index.html';
+       /**
        if (accountId === null || accountId === undefined || accountId === '') {
            toastr.info("请输入管理员账号!");
            return;
@@ -106,6 +108,8 @@
        request.accountId=accountId;
        request.accountPwd=accountPwd;
        console.log(JSON.stringify(request));
+
+
        $.ajax({
            url:"http://localhost:8080/btzapp/accountController.do?checkuser",
            type:'post',
@@ -127,6 +131,7 @@
                500:function(){console.log('error by server');},
            }
        });
+        */
     }
 
 </script>

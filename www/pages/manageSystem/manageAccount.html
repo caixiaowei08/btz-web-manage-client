@@ -129,7 +129,7 @@
     $(function () {
         $(window).resize(function () {
             $('#admin_table').bootstrapTable('resetView', {
-                //height: tableHeight()
+                height: tableHeight()
             })
         })
 
@@ -141,7 +141,7 @@
             pagination: false,//设置为 true 会在表格底部显示分页条
             pageSize: 15,//单页记录数
             pageList: [10, 15, 20, 25, 30, 35, 40],//分页步进值
-           // height: tableHeight(),
+            height: tableHeight(),
             showRefresh: false,//刷新按钮
             uniqueId: "id",
             locale: "zh-CN",
