@@ -8,5 +8,8 @@
     box-sizing:border-box;
     margin-left:190px;
     height: 100%;
+}
 
+.main-content{
+    margin-top: 45px;
 }

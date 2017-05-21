@@ -20,27 +20,30 @@
     </ul><!-- /.breadcrumb -->
 </div>
 <div class="page-content">
-    <div class="panel-body" style="padding-bottom:0px;">
-        <div class="panel panel-default">
+    <!--<div class="panel-body" style="padding-bottom:0px;">
+        <div class="panel panel-primary">
             <div class="panel-heading">查询条件</div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="txt_search_departmentname">部门名称</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="txt_search_departmentname">
+                        <label class="control-label col-sm-1" for="userId">登录账号：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="userId">
                         </div>
-                        <label class="control-label col-sm-1" for="txt_search_statu">状态</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="txt_search_statu">
+                        <label class="control-label col-sm-1" for="userId">账号类型：</label>
+                        <div class="col-sm-3" style="height: 34px;line-height: 34px;">
+                            <input type="radio" name="role"  value="0" checked>&nbsp;全部&nbsp;&nbsp;
+                            <input type="radio" name="role"  value="1">&nbsp;试用账号&nbsp;&nbsp;
+                            <input type="radio" name="role"  value="2">&nbsp;VIP账号
                         </div>
-                        <div class="col-sm-4" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                        <div class="col-sm-4">
+                            <button type="button" style="margin-left:50px" id="" class="btn btn-primary">查询</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+    </div>-->
     <div id="toolbar" class="btn-group">
         <button id="btn_add" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
@@ -271,7 +274,26 @@
         })
     })
 
+    var type_data_enum = [
+        {id: -1, text: '--请选择账号类型--'},
+        {id: 1, text: '试用账号'},
+        {id: 2, text: 'VIP账号'}
+    ];
+    $('#type').select2({
+        data: type_data_enum,
+        tags: "true",
+        placeholder: "Select a type", //默认提示语
+        theme: "classic"
+    });
+
     function tableHeight() {
         return $(window).height() - 250;
     }
+    /**
+    function getCondition(){
+        var params = new Object();
+        params.userId = $("#userId").val();
+        params.type = $("#type").val();
+        return JSON.stringify(params);
+    }*/
 </script>
