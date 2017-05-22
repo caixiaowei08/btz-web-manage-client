@@ -136,6 +136,7 @@
 <script>
     //新增轮播请求
     $("#addAdCarouselSubmit").click(function () {
+       //@TODO 防止抖动 添加代码
         var img = $("#file_pic_data").find("img").attr('src');
         console.log(img);
         var url = $("#url").val();
@@ -158,7 +159,7 @@
         object.img = img;
         object.url = url;
         object.sfyn = sfyn;
-        object.order = order;
+        object.orderNo = order;
         $.ajax({
             url:GLOBAL_CONSTANT_URL+"newsController.do?doAdd",
             type:'post',
