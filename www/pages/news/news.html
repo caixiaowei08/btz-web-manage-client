@@ -37,12 +37,12 @@
                 </ul>
                 <div class="tab-content">
                     <div id="home" class="tab-pane fade in active">
-                        <div class="btn-group" role="group">
-                            <div class="btn btn-success" data-toggle="modal" data-target="#addAdCarousel">添加</div>
-                            <div class="btn btn-info" data-toggle="modal" data-target="#updateCourse">修改</div>
-                            <div class="btn btn-danger" data-toggle="modal" data-target="#deleteCourse">删除</div>
-                        </div>
                         <table id="sub_course_table" class="table table-hover">
+                            <div id="toolbar" class="btn-group" role="group">
+                                <div class="btn btn-success" data-toggle="modal" data-target="#addAdCarousel">添加</div>
+                                <div class="btn btn-info" data-toggle="modal" data-target="#updateCourse">修改</div>
+                                <div class="btn btn-danger" data-toggle="modal" data-target="#deleteCourse">删除</div>
+                            </div>
                         </table>
                         <div class="modal fade" id="addAdCarousel" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog">
@@ -137,8 +137,6 @@
     //新增轮播请求
     $("#addAdCarouselSubmit").click(function () {
        //@TODO 防止抖动 添加代码
-       // var img = //$("#file_pic_data").find("img").attr('style');
-       // var thumbnail = $("#file_pic_data").find("img").attr('src');
         var url = $("#url").val();
         var sfyn = $("#sfyn").val();
         var order = $("#order").val();
@@ -188,6 +186,9 @@
                     toastr.success("服务器异常,请联系管理员！");
                     console.log(errorThrow);
                 },
+                complete:function () {
+                    $("#addAdCarousel").modal("hide");
+                },
                 statusCode:{
                     404:function(){console.log('not found');},
                     500:function(){console.log('error by server');},
@@ -195,7 +196,6 @@
             });
         }
     });
-
      $(function () {
         //图片选择
         $('#file_pic').ace_file_input({
@@ -220,7 +220,11 @@
             searchTimeOut: 500,
             url: GLOBAL_CONSTANT_URL+"newsController.do?datagrid",
             sidePagination: "server",
+            onLoadError: function(){  //加载失败时执行
+                toastr.warning("网络连接超时！");
+            },
             method:"post",
+            toolbar: '#toolbar',
             pagination: true,//设置为 true 会在表格底部显示分页条
             pageSize: 15,//单页记录数
             pageList: [10, 15, 20, 25, 30, 35, 40],//分页步进值
@@ -235,50 +239,56 @@
                     title: "<span class='text-danger'>百题斩APP轮播物料</span>",
                     halign: "center",
                     align: "center",
-                    colspan: 5
+                    colspan: 6
                 }
                 ],
-                [{
+                [ {
                     title: "#",
                     width: "5%",//宽度
                     checkbox: true,
                     align: "center",//水平
                     valign: "middle"//垂直
-                },
-                    {
+                },{
+                    title: "编号",
+                    field: "id",
+                    width: "10%",//宽度
+                    align: "center",//水平
+                    valign: "middle"//垂直
+                }, {
                         title: "图片",
                         field: "img",
-                        width: "40%",//宽度
+                        width: "35%",//宽度
                         align: "center",//水平
                         valign: "middle",//垂直
                         formatter: function(value,row,index){
                             return '<img style="padding:2px;border:1px solid #D7D7D7;background-color:#FFF;background-repeat:no-repeat;backgound-position:center;margin:1px 1px 1px 1px;" src="'+value+'" >';
                         }
-                    },
-                    {
+                },{
                         title: "跳转链接",
                         field: "url",
                         sortable: true,
-                        width: "35%",//宽度
+                        width: "30%",//宽度
                         align: "center",//水平
                         valign: "middle"//垂直
-                    },
-                    {
+                },{
                         title: "是否使用",
                         field: "sfyn",
                         sortable: true,
                         width: "10%",//宽度
                         align: "center",//水平
-                        valign: "middle"//垂直
-                    },
-                    {
+                        valign: "middle",//垂直
+                       formatter: function(value,row,index){
+                        return value === 1 ? "是":"否" ;
+                    }
+
+                },{
                         title: "显示顺序",
                         field: "orderNo",
                         sortable: true,
                         width: "10%",//宽度
                         align: "center",//水平
                         valign: "middle"//垂直
-                    }
+                }
                 ]
             ]
         })
@@ -372,7 +382,6 @@
         $(':input', form).each(function () {
             var type = this.type;
             var tag = this.tagName.toLowerCase(); // normalize case
-            console.log(type);
             if (type == 'text' || type == 'password' || type == 'number'){
                 this.value = "";
             }else if(type == 'file'){

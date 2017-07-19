@@ -14,22 +14,17 @@ const param_height = 1200;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 function createWindow () {
-  // Create the browser window.
   mainWindow = new BrowserWindow({
       width:param_width,
       height:param_height,
       minWidth :1200,
       minHeight : 900,
-     // maxWidth:param_width,
-     // maxHeight:param_height,
-     // autoHideMenuBar:true,
       icon:"./www/pages/image/favicon.ico"
   })
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
    pathname: path.join(__dirname, './www/pages/login/login.html'),
-    //pathname: path.join(__dirname, './www/pages/main/index.html'),
     protocol: 'file:',
       slashes: true
   }))
